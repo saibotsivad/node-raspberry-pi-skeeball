@@ -1,0 +1,22 @@
+{
+  "name": "node-raspberry-pi-skeeball",
+  "version": "1.0.0",
+  "description": "A neat little skeeball program for a raspberry pi.",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/node-raspberry-pi-skeeball.git"
+  },
+  "author": "saibotsivad",
+  "license": "VOL",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/node-raspberry-pi-skeeball/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/node-raspberry-pi-skeeball#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "rpi-gpio": "^0.8.1"
+  }
+}
