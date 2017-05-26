@@ -17,6 +17,8 @@
   "homepage": "https://github.com/saibotsivad/node-raspberry-pi-skeeball#readme",
   "dependencies": {
     "chalk": "^1.1.3",
+    "jwerty": "^0.3.2",
+    "keypress": "^0.2.1",
     "rpi-gpio": "^0.8.1"
   }
 }
