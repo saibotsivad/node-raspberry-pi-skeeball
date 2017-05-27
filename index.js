@@ -1,56 +1,40 @@
-const filename = process.argv[2]
-const emitter = require(filename)
+const gameController = require('./game.js')
+const sleepController = require('./timer.js')
 
-const ballsPerRound = 7
+const pinController = process.argv[2] || './pins.js'
+const secondsToWaitBeforeSleeping = process.argv[3] || (5 * 60)
+const ballsPerRound = process.argv[4] || 7
 
-let numberOfBalls = 0
-let scoreForRound = 0
-let gameIsComplete = false
+const pins = require(pinController)
+const game = gameController(ballsPerRound, pins)
+const timer = sleepController(secondsToWaitBeforeSleeping)
 
-function gameIsStillInPlay() {
-	return numberOfBalls < ballsPerRound
-}
-
-function gameIsOver() {
-	return numberOfBalls >= ballsPerRound
-}
-
-function updateGameCompleteness() {
-	if (gameIsOver()) {
-		gameIsComplete = true
-	}
-}
-
-function gameJustCompleted() {
-	return !gameIsComplete && gameIsOver()
-}
-
-function registerBallScore(score) {
-	numberOfBalls++
-	scoreForRound += score
-}
-
-function resetGame() {
-	numberOfBalls = 0
-	scoreForRound = 0
-	gameIsComplete = false
-}
-
-emitter.on('increment', score => {
-	if (gameIsStillInPlay()) {
-		registerBallScore(score)
-		console.log(`ball ${numberOfBalls}, score ${scoreForRound}`)
-	}
-	if (gameJustCompleted()) {
-		console.log(`game over with ${scoreForRound} points`)
-	}
-	if (!gameIsStillInPlay() && !gameJustCompleted()) {
-		console.log('restart the game')
-	}
-	updateGameCompleteness()
+game.on('action', params => {
+	timer.emit('reset')
+	console.log('action', params)
 })
 
-emitter.on('reset', () => {
-	resetGame()
-	console.log('game restarted')
+game.on('complete', params => {
+	pins.emit('restartLight', true)
+	console.log('complete', params)
+})
+
+game.on('reset', () => {
+	timer.emit('reset')
+	pins.emit('displayLight', true)
+	pins.emit('restartLight', false)
+	console.log('reset')
+})
+
+pins.on('shutdown', () => {
+	timer.emit('shutdown')
+})
+
+timer.on('seconds', seconds => {
+	console.log('seconds', seconds)
+	if (seconds <= 0) {
+		game.emit('resetGame')
+		pins.emit('displayLight', false)
+		pins.emit('restartLight', true)
+	}
 })

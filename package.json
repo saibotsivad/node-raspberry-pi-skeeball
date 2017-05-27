@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A neat little skeeball program for a raspberry pi.",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "develop": "node index.js ./keyboard.js 30 7"
   },
   "repository": {
     "type": "git",
