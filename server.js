@@ -15,9 +15,4 @@ module.exports = (port, emitter) => {
 	emitter.on('emit', data => {
 		io.sockets.emit('message', data)
 	})
-
-	emitter.on('shutdown', () => {
-		io.close()
-		server.close()
-	})
 }

@@ -66,8 +66,7 @@ pins.on('reset', () => {
 })
 
 pins.on('shutdown', () => {
-	timer.emit('shutdown')
-	emitter.emit('shutdown')
+	process.exit(0)
 })
 
 timer.on('seconds', seconds => {
