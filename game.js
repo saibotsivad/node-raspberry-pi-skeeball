@@ -1,7 +1,15 @@
 const EventEmitter = require('events')
+const debouncer = require('debouncer')
+const levelup = require('levelup')
+const memdown = require('memdown')
+
+const uniqueIdentifier = 'skeeball'
+const millisDebounceTimeForAction = 500
 
 module.exports = (ballsPerRound, inputEmitter) => {
 	const emitter = new EventEmitter()
+	const db = levelup(uniqueIdentifier, { db: memdown })
+	const debounce = debouncer(db, { delayTimeMs: millisDebounceTimeForAction })
 
 	let numberOfBalls = 0
 	let scoreForRound = 0
@@ -37,30 +45,38 @@ module.exports = (ballsPerRound, inputEmitter) => {
 	}
 
 	inputEmitter.on('increment', score => {
-		if (gameIsStillInPlay()) {
-			registerBallScore(score)
-			emitter.emit('action', {
-				score: scoreForRound,
-				ballsPlayed: numberOfBalls
-			})
-		}
-		if (gameJustCompleted()) {
-			emitter.emit('complete', {
-				score: scoreForRound
-			})
-		}
-		if (!gameIsStillInPlay() && !gameJustCompleted()) {
-			emitter.emit('complete', {
-				score: scoreForRound,
-				previouslyCompleted: true
-			})
-		}
-		updateGameCompleteness()
+		debounce('increment', (err, allowed) => {
+			if (allowed) {
+				if (gameIsStillInPlay()) {
+					registerBallScore(score)
+					emitter.emit('action', {
+						score: scoreForRound,
+						ballsPlayed: numberOfBalls
+					})
+				}
+				if (gameJustCompleted()) {
+					emitter.emit('complete', {
+						score: scoreForRound
+					})
+				}
+				if (!gameIsStillInPlay() && !gameJustCompleted()) {
+					emitter.emit('complete', {
+						score: scoreForRound,
+						previouslyCompleted: true
+					})
+				}
+				updateGameCompleteness()
+			}
+		})
 	})
 
 	inputEmitter.on('reset', () => {
-		resetGame()
-		emitter.emit('reset')
+		debounce('reset', (err, allowed) => {
+			if (allowed) {
+				resetGame()
+				emitter.emit('reset')
+			}
+		})
 	})
 
 	emitter.on('resetGame', () => {
