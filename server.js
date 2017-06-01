@@ -6,11 +6,18 @@ module.exports = (port, emitter) => {
 
 	app.use(express.static('public'))
 
-	const io = socketio.listen(app.listen(port, () => {
+	const server = app.listen(port, () => {
 		console.log(`server started on port ${port}`)
-	}))
+	})
+
+	const io = socketio.listen(server)
 
 	emitter.on('emit', data => {
 		io.sockets.emit('message', data)
+	})
+
+	emitter.on('shutdown', () => {
+		io.close()
+		server.close()
 	})
 }
