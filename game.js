@@ -63,9 +63,5 @@ module.exports = ballsPerRound => {
 		emitter.emit('reset')
 	})
 
-	emitter.on('resetGame', () => {
-		resetGame()
-	})
-
 	return emitter
 }

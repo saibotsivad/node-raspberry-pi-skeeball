@@ -19,9 +19,5 @@ module.exports = secondsToStartWith => {
 		emitter.emit('seconds', secondsRemaining)
 	})
 
-	emitter.on('shutdown', () =>{
-		clearInterval(interval)
-	})
-
 	return emitter
 }
