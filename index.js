@@ -49,6 +49,19 @@ game.on('reset', () => {
 	})
 })
 
+timer.on('seconds', seconds => {
+	console.log('seconds', seconds)
+	emitter.emit('emit', {
+		key: 'seconds',
+		data: seconds
+	})
+	if (seconds <= 0) {
+		game.emit('restart')
+		pins.emit('displayLight', false)
+		pins.emit('restartLight', true)
+	}
+})
+
 pins.on('increment', score => {
 	debounce('increment', (err, allowed) => {
 		if (allowed) {
@@ -67,19 +80,6 @@ pins.on('reset', () => {
 
 pins.on('shutdown', () => {
 	process.exit(0)
-})
-
-timer.on('seconds', seconds => {
-	console.log('seconds', seconds)
-	emitter.emit('emit', {
-		key: 'seconds',
-		data: seconds
-	})
-	if (seconds <= 0) {
-		game.emit('resetGame')
-		pins.emit('displayLight', false)
-		pins.emit('restartLight', true)
-	}
 })
 
 serverController(serverPort, emitter)
