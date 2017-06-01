@@ -4,7 +4,7 @@
   "description": "A neat little skeeball program for a raspberry pi.",
   "scripts": {
     "start": "node index.js",
-    "develop": "node index.js ./keyboard.js 45 7",
+    "develop": "node index.js ./keyboard.js 45 7 3001 1000",
     "build": "browserify public/app.js > public/build.js"
   },
   "repository": {
