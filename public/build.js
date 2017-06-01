@@ -71,8 +71,8 @@ var template = function () {
 
 function add_css() {
 	var style = createElement('style');
-	style.id = "svelte-3280404354-style";
-	style.textContent = "\ndiv[svelte-3280404354].score-area, [svelte-3280404354] div.score-area {\n\ttext-align: center;\n\tcolor: blue;\n\tfont-size: 4em;\n\ttext-transform: uppercase;\n\tfont-family: \"Lucida Console\", \"Monaco\", \"Courier New\", Courier, monospace;\n}\n[svelte-3280404354].warning, [svelte-3280404354] .warning {\n\tfont-size: 0.4em;\n\tcolor: red;\n}\ndiv[svelte-3280404354][display-is-active], [svelte-3280404354] div[display-is-active] {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n}\ndiv[svelte-3280404354][display-is-active=false] *, [svelte-3280404354] div[display-is-active=false] * {\n\tdisplay: none;\n}\n";
+	style.id = "svelte-1155209667-style";
+	style.textContent = "\ndiv[svelte-1155209667].score-area, [svelte-1155209667] div.score-area {\n\ttext-align: center;\n\tcolor: blue;\n\tfont-size: 5em;\n\ttext-transform: uppercase;\n\tfont-family: \"Lucida Console\", \"Monaco\", \"Courier New\", Courier, monospace;\n}\n[svelte-1155209667].warning, [svelte-1155209667] .warning {\n\tfont-size: 0.4em;\n\tcolor: red;\n}\ndiv[svelte-1155209667][display-is-active], [svelte-1155209667] div[display-is-active] {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n}\ndiv[svelte-1155209667][display-is-active=false] *, [svelte-1155209667] div[display-is-active=false] * {\n\tdisplay: none;\n}\n";
 	appendNode(style, document.head);
 }
 
@@ -80,7 +80,7 @@ function create_main_fragment(state, component) {
 	var div_display_is_active_value, text_2_value;
 
 	var div = createElement('div');
-	setAttribute(div, 'svelte-3280404354', '');
+	setAttribute(div, 'svelte-1155209667', '');
 	setAttribute(div, 'display-is-active', div_display_is_active_value = state.displayIsActive);
 	var div_1 = createElement('div');
 	appendNode(div_1, div);
@@ -291,7 +291,7 @@ function Display(options) {
 	this._yield = options._yield;
 
 	this._torndown = false;
-	if (!document.getElementById("svelte-3280404354-style")) add_css();
+	if (!document.getElementById("svelte-1155209667-style")) add_css();
 
 	this._fragment = create_main_fragment(this._state, this);
 	if (options.target) this._fragment.mount(options.target, null);
