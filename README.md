@@ -1,5 +1,7 @@
 # node-raspberry-pi-skeeball
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/saibotsivad/node-raspberry-pi-skeeball.svg)](https://greenkeeper.io/)
+
 A neat little skeeball program for a raspberry pi.
 
 While the program works reasonably well, I should note
